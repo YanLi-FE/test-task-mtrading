@@ -3,7 +3,7 @@ export let flag: string;
 export let index: number;
 export let name: string;
 export let percentage: number;
-export let active: boolean;
+export let active: boolean = false;
 
 let number: number;
 $: number = index + 1;
