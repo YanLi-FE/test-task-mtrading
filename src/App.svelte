@@ -157,7 +157,7 @@ onMount(async () => {
 	{/if}
 </main>
 
-<div class="carousel-dots">
+<div class="carousel-dots-container">
 	<CarouselDots
 		total={traders.length}
 		current={selectedTraderIndex}
@@ -210,7 +210,7 @@ onMount(async () => {
 	grid-column: 1 / span 4;
 }
 
-.carousel-dots {
+.carousel-dots-container {
 	display: none;
 	margin: 1.25rem 0;
 }
@@ -259,7 +259,7 @@ onMount(async () => {
 		grid-column: 1 / span 2;
 	}
 
-	.carousel-dots {
+	.carousel-dots-container {
 		display: block;
 	}
 }
