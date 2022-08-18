@@ -55,6 +55,12 @@ onMount(async () => {
 	</div>
 	{#if selectedTrader != null}
 		<div class="full-info-container">
+			<TraderButton
+				index={selectedTraderIndex}
+				name={selectedTrader.name}
+				flag={selectedTrader.flag}
+				percentage={selectedTrader.monthly_profit}
+			/>
 			<ValueWithLabelAboveChart
 				label="Monthly profit"
 				value={selectedTrader.monthly_profit}
@@ -111,7 +117,58 @@ onMount(async () => {
 	padding: 1.75rem 1.5rem 1.5rem 1.5rem;
 }
 
+/* trader on mobile */
+.full-info-container > :global(:nth-child(1)) {
+	display: none;
+}
+
+/* chart */
 .full-info-container > :global(:last-child) {
 	grid-column: 1 / span 4;
+}
+
+@media (max-width: 768px) {
+	.main-header, .main-grid {
+		max-width: 768px;
+	}
+
+	.main-header {
+		font-size: 1.75rem;
+		line-height: 2rem;
+	}
+
+	.traders {
+		display: none;
+	}
+
+	.main-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.full-info-container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	/* trader on mobile */
+	.full-info-container > :global(:nth-child(1)) {
+		display: flex;
+		grid-column: 1 / span 2;
+	}
+
+	/* in management */
+	.full-info-container > :global(:nth-child(4)) {
+		display: none;
+	}
+
+	/* button */
+	.full-info-container > :global(:nth-child(5)) {
+		grid-column: 1 / span 2;
+		grid-row: 4;
+	}
+
+	/* chart */
+	.full-info-container > :global(:last-child) {
+		grid-column: 1 / span 2;
+	}
 }
 </style>

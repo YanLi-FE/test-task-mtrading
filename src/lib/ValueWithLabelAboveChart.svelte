@@ -23,4 +23,10 @@ $: formattedValue = Math.round(parseFloat(value.toString())).toLocaleString('ru-
 	margin-top: 0.5rem;
 	font-family: "Gotham Pro", sans-serif;
 }
+
+@media (max-width: 768px) {
+	.value {
+		font-size: 1.25rem;
+	}
+}
 </style>

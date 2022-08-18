@@ -73,4 +73,11 @@ $: flagAlt = `${name}'${name.endsWith('s') ? '' : 's'} flag`
 .trader-button-value.negative {
 	color: #E53935;
 }
+
+@media (max-width: 768px) {
+	.trader-button-text {
+		font-size: 1rem;
+		line-height: 1.25rem;
+	}
+}
 </style>

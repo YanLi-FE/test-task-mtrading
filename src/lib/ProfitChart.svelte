@@ -67,6 +67,15 @@ onMount(() => {
 
 	const observer = new ResizeObserver(entries => {
 		const div = entries[0];
+		const scalesVisibility = document.body.clientWidth > 768;
+		chart.applyOptions({
+			timeScale: {
+				visible: scalesVisibility,
+			},
+			rightPriceScale: {
+				visible: scalesVisibility,
+			},
+		});
 		chart.resize(div.contentRect.width, chartContainer.clientHeight, true);
 		chart.timeScale().fitContent();
 	});
