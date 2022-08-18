@@ -17,7 +17,7 @@ let lineSeries: ISeriesApi<"Line">;
 
 let chartData: { time: string; value: number }[];
 $: {
-	const startDate = new Date(Date.now() - DAY * 30);
+	const startDate = new Date(Date.now() - DAY * data.length);
 	chartData = data.map((value, index) => ({
 		time: new Date(startDate.getTime() + DAY * index).toISOString(),
 		value: value
@@ -86,4 +86,38 @@ onMount(() => {
 });
 </script>
 
-<div bind:this={chartContainer}></div>
+<div
+	class="chart-container"
+	class:no-chart={chartData.length === 0}
+	bind:this={chartContainer}
+>
+	<div class="chart-overlay">
+		No chart data
+	</div>
+</div>
+
+<style>
+.chart-container {
+	position: relative;
+}
+
+.chart-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 10;
+	font-size: 2rem;
+	opacity: 0.25;
+	text-transform: uppercase;
+	display: grid;
+	place-items: center;
+	visibility: hidden;
+}
+
+.chart-container.no-chart :global(canvas) {
+	display: none;
+}
+
+.chart-container.no-chart .chart-overlay {
+	visibility: visible;
+}
+</style>
