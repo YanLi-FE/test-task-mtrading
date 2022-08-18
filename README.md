@@ -2,7 +2,7 @@
 
 ## Requirements
 
-This was tested with Node 16.*
+This project was tested with Node 16.*
 
 ## Running the code
 
