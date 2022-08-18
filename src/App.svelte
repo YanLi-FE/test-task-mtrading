@@ -4,6 +4,7 @@ import TraderButton from "./lib/TraderButton.svelte";
 import ValueWithLabelAboveChart from "./lib/ValueWithLabelAboveChart.svelte";
 import CustomButton from "./lib/CustomButton.svelte";
 import ProfitChart from "./lib/ProfitChart.svelte";
+import CarouselDots from "./lib/CarouselDots.svelte";
 
 let traders: TraderData[] = [];
 let selectedTraderIndex = 0;
@@ -82,6 +83,10 @@ onMount(async () => {
 	{/if}
 </main>
 
+<div class="carousel-dots">
+	<CarouselDots total={traders.length} current={selectedTraderIndex} />
+</div>
+
 <style>
 .main-header {
 	max-width: 1180px;
@@ -127,6 +132,11 @@ onMount(async () => {
 	grid-column: 1 / span 4;
 }
 
+.carousel-dots {
+	display: none;
+	margin: 1.25rem 0;
+}
+
 @media (max-width: 768px) {
 	.main-header, .main-grid {
 		max-width: 768px;
@@ -169,6 +179,10 @@ onMount(async () => {
 	/* chart */
 	.full-info-container > :global(:last-child) {
 		grid-column: 1 / span 2;
+	}
+
+	.carousel-dots {
+		display: block;
 	}
 }
 </style>
