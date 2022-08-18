@@ -38,7 +38,9 @@ onMount(async () => {
 });
 </script>
 
-<main>
+<h1 class="main-header">Copy the best masters</h1>
+
+<main class="main-grid">
 	<div class="traders">
 		{#each traders as trader, index}
 			<TraderButton
@@ -75,8 +77,18 @@ onMount(async () => {
 </main>
 
 <style>
-main {
-	width: 1180px;
+.main-header {
+	max-width: 1180px;
+	font-size: 3rem;
+	font-weight: 500;
+	line-height: 5.125rem;
+	color: #0A071E;
+	margin: 2.5rem auto 1.56rem;
+	font-family: "Gotham Pro", sans-serif;
+}
+
+.main-grid {
+	max-width: 1180px;
 	display: grid;
 	grid-template-columns: 295px 1fr;
 	gap: 29px;

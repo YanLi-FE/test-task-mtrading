@@ -21,5 +21,6 @@ $: formattedValue = Math.round(parseFloat(value.toString())).toLocaleString('ru-
 .value {
 	font-size: 1.75rem;
 	margin-top: 0.5rem;
+	font-family: "Gotham Pro", sans-serif;
 }
 </style>
