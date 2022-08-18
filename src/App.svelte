@@ -158,7 +158,11 @@ onMount(async () => {
 </main>
 
 <div class="carousel-dots">
-	<CarouselDots total={traders.length} current={selectedTraderIndex} />
+	<CarouselDots
+		total={traders.length}
+		current={selectedTraderIndex}
+		on:selectIndex={e => selectTrader(e.detail)}
+	/>
 </div>
 
 <style>
