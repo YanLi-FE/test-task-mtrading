@@ -9,6 +9,72 @@ import CarouselDots from "./lib/CarouselDots.svelte";
 let traders: TraderData[] = [];
 let selectedTraderIndex = 0;
 
+const SWIPE_THRESHOLD = 50;
+
+let nextSelectedTraderIndex = 0;
+let touchStartX: number;
+let hasAnimationEnded = true;
+let divForAnimation: HTMLDivElement;
+function onTouchStart(e: TouchEvent): void {
+	if (!hasAnimationEnded) return;
+	touchStartX = e.touches[0].screenX;
+	divForAnimation.style.transition = "none";
+}
+function onTouchMove(e: TouchEvent): void {
+	if (!hasAnimationEnded) return;
+	const touchEndX = e.touches[0].screenX;
+	const touchDiff = touchEndX - touchStartX;
+	divForAnimation.style.transform = `translateX(${touchDiff}px)`;
+}
+function onTouchEnd(e: TouchEvent): void {
+	if (!hasAnimationEnded) return;
+	const touchEndX = e.changedTouches[0].screenX;
+	const touchDiff = touchEndX - touchStartX;
+	if (touchDiff > SWIPE_THRESHOLD) {
+		nextSelectedTraderIndex = selectedTraderIndex - 1;
+		if (nextSelectedTraderIndex < 0) {
+			nextSelectedTraderIndex = traders.length - 1;
+		}
+		animateDiv("right");
+	} else if (touchDiff < -SWIPE_THRESHOLD) {
+		nextSelectedTraderIndex = selectedTraderIndex + 1;
+		if (nextSelectedTraderIndex >= traders.length) {
+			nextSelectedTraderIndex = 0;
+		}
+		animateDiv("left");
+	} else {
+		divForAnimation.style.transition = `transform 0.2s ease-out`;
+		divForAnimation.style.transform = `translateX(0)`;
+	}
+}
+function animateDiv(direction: "left" | "right"): void {
+	hasAnimationEnded = false;
+
+	const animationOptions: KeyframeAnimationOptions = {
+		easing: "ease-out",
+		duration: 200,
+	};
+
+	const sign = direction === "left" ? -1 : 1;
+	const hideAnimation: Keyframe = { transform: `translateX(${100 * sign}%)` };
+	const showAnimation: Keyframe[] = [
+		{ transform: `translateX(${-100 * sign}%)` },
+		{ transform: "translateX(0)" },
+	];
+
+	divForAnimation
+		.animate(hideAnimation, animationOptions)
+		.onfinish = () => {
+			selectedTraderIndex = nextSelectedTraderIndex;
+			divForAnimation
+				.animate(showAnimation, animationOptions)
+				.onfinish = () => {
+					divForAnimation.style.transform = `translateX(0)`;
+					hasAnimationEnded = true;
+				};
+		};
+}
+
 let selectedTrader: TraderData;
 $: selectedTrader = traders[selectedTraderIndex];
 
@@ -55,7 +121,13 @@ onMount(async () => {
 		{/each}
 	</div>
 	{#if selectedTrader != null}
-		<div class="full-info-container">
+		<div
+			bind:this={divForAnimation}
+			class="full-info-container"
+			on:touchstart={onTouchStart}
+			on:touchmove={onTouchMove}
+			on:touchend={onTouchEnd}
+		>
 			<TraderButton
 				index={selectedTraderIndex}
 				name={selectedTrader.name}
