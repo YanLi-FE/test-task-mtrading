@@ -59,6 +59,16 @@ onMount(() => {
 	lineSeries = chart.addLineSeries({
 		color: "#8A24F3",
 	});
+
+	const observer = new ResizeObserver(entries => {
+		const div = entries[0];
+		chart.resize(div.contentRect.width, chartContainer.clientHeight, true);
+		chart.timeScale().fitContent();
+	});
+
+	observer.observe(chartContainer.parentElement);
+
+	return () => observer.disconnect();
 });
 </script>
 
