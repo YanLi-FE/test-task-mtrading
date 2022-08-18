@@ -99,7 +99,9 @@ onMount(async () => {
 	const response = await fetch("/input.json");
 	const allTraders: TraderData[] = await response.json();
 	for (let i = 0; i < 4; i++) {
-		traders.push(allTraders.splice(randomFromZero(allTraders.length), 1)[0]);
+		const newTraderIndex = randomFromZero(allTraders.length);
+		const newTrader = allTraders.splice(newTraderIndex, 1)[0];
+		traders.push(newTrader);
 	}
 	traders = traders;
 });
